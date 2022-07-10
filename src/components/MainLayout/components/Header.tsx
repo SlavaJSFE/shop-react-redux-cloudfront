@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme: Theme) =>
     homeLink: {
       color: 'white',
       textDecoration: 'none'
+    },
+    background: {
+      backgroundColor: '#f50057'
     }
   }),
 );
@@ -44,7 +47,7 @@ export default function Header() {
 
   return (
     <AppBar position="relative">
-      <Toolbar>
+      <Toolbar className={classes.background}>
         <Typography variant="h6" className={classes.title}>
           <Link className={classes.homeLink} to="/">My Store!</Link>
         </Typography>
