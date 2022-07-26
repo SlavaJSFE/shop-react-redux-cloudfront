@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import axios from 'axios';
 import {Link} from "react-router-dom";
 import API_PATHS from "constants/apiPaths";
@@ -11,14 +11,21 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from "@material-ui/core/Button";
 import {formatAsPrice} from "utils/utils";
+import { getProductsList } from 'api/endpoints';
 
 export default function ProductsTable() {
   const [products, setProducts] = useState<any>([]);
 
-  useEffect(() => {
-    axios.get(`${API_PATHS.bff}/product`)
-      .then(res => setProducts(res.data));
+  const fetchData = useCallback(async () => {
+    try {
+      const productsList = await getProductsList();      
+      setProducts(productsList);
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
+
+  useEffect(() => { fetchData() }, [fetchData])
 
   const onDelete = (id: string) => {
     axios.delete(`${API_PATHS.bff}/product/${id}`)
