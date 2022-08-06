@@ -29,4 +29,15 @@ export const createProduct = async (product: any) => {
   } catch (error: any) {
     console.log(error.data.message);
   }
-}
+};
+
+export const getPresignedUrl = async (fileName: string) => {
+  try {
+    const { data } = await axios.get(`${API_PATHS.importService}/import?name=${fileName}`);
+    console.log(data.presignedUrl);
+    
+    return data.presignedUrl;
+  } catch (error: any) {
+    console.log(error.data.message);
+  }
+};
